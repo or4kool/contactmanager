@@ -1,4 +1,3 @@
-import csv
 
 
 class ContactManager:
@@ -12,6 +11,7 @@ class ContactManager:
         self.value = {}
         self.all_contact = []
 
+    # Add new contact
     def add_contact(self, contact={}):
 
         self.all_contact.append(contact)
@@ -19,6 +19,7 @@ class ContactManager:
         print("\n")
         print(self.all_contact)
 
+    # Push new contact into list
     def collect_contact(self):
         self.value = {}
         print("\nPlease enter a new contact")
@@ -27,6 +28,7 @@ class ContactManager:
             self.value[request] = str(input("Please enter your {}: ".format(request)))
         self.add_contact(self.value)
 
+    # Delete Fun
     def delete_contact(self, contact_name):
         # Delete a contact by name
         contacts = self.get_contact()
@@ -38,6 +40,7 @@ class ContactManager:
         else:
             print("\nPlease brother what is your problem!")
 
+    # Search for single contact
     def search_contact(self, contact_name):
         contacts = self.get_contact()
         for index, name in enumerate(contacts):
@@ -55,9 +58,11 @@ class ContactManager:
         else:
             print("\nPlease brother what are you looking for!")
 
+    # Get all conact
     def get_contact(self):
         return self.all_contact
 
+    # Format all contacts and display
     def display_all_contact(self):
         every_contact = self.get_contact()
         for contact in every_contact:
@@ -71,6 +76,7 @@ class ContactManager:
             """.format(**contact))
             print("=" * 40)
 
+    # Func that handles all other functions
     def gensis(self):
 
         user_selected = ""
@@ -88,7 +94,6 @@ class ContactManager:
             user_selected = str(input("Please Select the Value you want btw A, B, C, D, Q:")).upper()
 
             if user_selected == "A":
-                # contact_name = str(input("Please Enter a contact name to search f"))
                 self.collect_contact()
             elif user_selected == "B":
                 contact_name = str(input("\nPlease enter a contact name to delete: "))
@@ -104,5 +109,6 @@ class ContactManager:
             else:
                 print("\nPlease enter a valid option")
 
+# create class instance
 contact_manager = ContactManager()
 contact_manager.gensis()
