@@ -1,3 +1,4 @@
+import csv
 
 
 class ContactManager:
@@ -10,37 +11,51 @@ class ContactManager:
         self.picture = picture
         self.value = {}
         self.all_contact = []
+        # self.all_contact = self.read_csv()
 
-    # Add new contact
-    def add_contact(self, contact={}):
+    def add_contact(self, contact):
 
         self.all_contact.append(contact)
 
-        print("\n")
-        print(self.all_contact)
+        # print(self.all_contact)
+        print("\n --Contact Successfully Added--")
 
-    # Push new contact into list
     def collect_contact(self):
         self.value = {}
         print("\nPlease enter a new contact")
         requests = ['Name', 'Phone Number', 'Email', 'Website', 'Birthday', 'Picture']
         for request in requests:
             self.value[request] = str(input("Please enter your {}: ".format(request)))
-        self.add_contact(self.value)
+        # self.add_contact(self.value)
+        self.write_csv(self.value)
 
-    # Delete Fun
+    # Read all contacts from csv file
+    def read_csv(self):
+        with open('csv-contact.csv') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            contact_file = filter(lambda data: data, csv_reader)
+            all_contact_file = list(contact_file)
+        return all_contact_file
+
+    def write_csv(self, contacts):
+        # num =0
+        with open('csv-contact.csv', 'a') as csv_writer:
+            header_name = ['Name', 'Phone Number', 'Email', 'Website', 'Birthday', 'Picture']
+            csv_write_data = csv.DictWriter(csv_writer, fieldnames=header_name)
+
+            csv_write_data.writerow(contacts)
+
     def delete_contact(self, contact_name):
         # Delete a contact by name
         contacts = self.get_contact()
         for index, name in enumerate(contacts):
             if contact_name == name['Name']:
                 contacts.pop(index)
-                print("\n Successful removed contact")
+                print("\n --Successful removed contact--")
                 break
         else:
-            print("\nPlease brother what is your problem!")
+            print("\n **Please brother what is your problem!**")
 
-    # Search for single contact
     def search_contact(self, contact_name):
         contacts = self.get_contact()
         for index, name in enumerate(contacts):
@@ -56,14 +71,18 @@ class ContactManager:
  """.format(**name))
                 break
         else:
-            print("\nPlease brother what are you looking for!")
+            print("\n **Please brother what are you looking for!**")
 
-    # Get all conact
     def get_contact(self):
+        csv_data = self.read_csv()
+        if csv_data:
+            self.all_contact = csv_data
+        else:
+            print("\n **No Contact to show you**")
         return self.all_contact
 
-    # Format all contacts and display
     def display_all_contact(self):
+        # print("YO")
         every_contact = self.get_contact()
         for contact in every_contact:
             print("""
@@ -76,7 +95,6 @@ class ContactManager:
             """.format(**contact))
             print("=" * 40)
 
-    # Func that handles all other functions
     def gensis(self):
 
         user_selected = ""
@@ -94,6 +112,7 @@ class ContactManager:
             user_selected = str(input("Please Select the Value you want btw A, B, C, D, Q:")).upper()
 
             if user_selected == "A":
+                # contact_name = str(input("Please Enter a contact name to search f"))
                 self.collect_contact()
             elif user_selected == "B":
                 contact_name = str(input("\nPlease enter a contact name to delete: "))
@@ -107,8 +126,9 @@ class ContactManager:
             elif user_selected == "Q":
                 break
             else:
-                print("\nPlease enter a valid option")
+                print("\n **Invalid enter a valid option**")
 
-# create class instance
 contact_manager = ContactManager()
 contact_manager.gensis()
+# contact_manager.write_csv({'Name': 'Ndi', 'Phone Number': '12', 'Email': 'ii@gmail.com', 'Website': 'ii.com', 'Birthday': '00', 'Picture': 'rr.png'})
+
