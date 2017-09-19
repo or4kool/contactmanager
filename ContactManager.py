@@ -16,8 +16,7 @@ class ContactManager:
 
         self.all_contact.append(contact)
 
-        print("\n")
-        print(self.all_contact)
+        print("\n --Contact Successfully Added--")
 
     # Push new contact into list
     def collect_contact(self):
@@ -35,10 +34,10 @@ class ContactManager:
         for index, name in enumerate(contacts):
             if contact_name == name['Name']:
                 contacts.pop(index)
-                print("\n Successful removed contact")
+                print("\n --Successful removed contact--")
                 break
         else:
-            print("\nPlease brother what is your problem!")
+            print("\n **Please brother what is your problem!**")
 
     # Search for single contact
     def search_contact(self, contact_name):
@@ -56,7 +55,7 @@ class ContactManager:
  """.format(**name))
                 break
         else:
-            print("\nPlease brother what are you looking for!")
+            print("\n**Please brother what are you looking for!**")
 
     # Get all conact
     def get_contact(self):
@@ -107,7 +106,7 @@ class ContactManager:
             elif user_selected == "Q":
                 break
             else:
-                print("\nPlease enter a valid option")
+                print("\n **Invalid. Enter a valid option**")
 
 # create class instance
 contact_manager = ContactManager()
